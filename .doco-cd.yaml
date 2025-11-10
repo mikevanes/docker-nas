@@ -1,0 +1,4 @@
+name: test-app
+working_dir: test-app
+force_image_pull: true
+remove_orphans: true

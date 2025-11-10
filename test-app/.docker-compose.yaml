@@ -1,0 +1,7 @@
+services:
+  hello:
+    image: nginxdemos/hello:latest
+    container_name: hello-test
+    restart: unless-stopped
+    ports:
+      - "8088:80"
