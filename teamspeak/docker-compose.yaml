@@ -1,0 +1,18 @@
+services:
+  teamspeak:
+    image: teamspeaksystems/teamspeak6-server:v6.0.0-beta7
+    container_name: teamspeak-server
+    restart: unless-stopped
+    networks:
+      - proxy_default
+    ports:
+      - "9987:9987/udp" 
+      - "30033:30033/tcp"
+    environment:
+      - TSSERVER_LICENSE_ACCEPTED=accept
+    volumes:
+      - /mnt/user/appdata/ts6:/var/tsserver
+
+networks:
+  proxy_default:
+    external: true
