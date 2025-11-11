@@ -48,6 +48,7 @@
   ],
   "rollbackPrs": true,
   "minimumReleaseAge": "2 days",
+  "rebaseWhen": "behind-base-branch",
   "vulnerabilityAlerts": {
     "labels": [
       "security"
