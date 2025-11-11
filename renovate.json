@@ -6,7 +6,8 @@
     ":semanticCommits",
     ":separateMajorReleases",
     ":label(dependencies)",
-    ":timezone(Europe/Amsterdam)"
+    ":timezone(Europe/Amsterdam)",
+    "schedule:nonOfficeHours"
   ],
   "enabledManagers": ["docker-compose"],
   "prHourlyLimit": 5,
@@ -19,16 +20,21 @@
     {
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true,
-      "automergeType": "branch"
+      "automergeType": "pr"
     },
     {
       "matchUpdateTypes": ["major"],
-      "automerge": false
+      "automerge": false,
+      "labels": ["major-update", "needs-review"]
     }
   ],
   "rollbackPrs": true,
   "stabilityDays": 2,
   "docker": {
-    "pinDigests": false
+    "pinDigests": true
+  },
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "stabilityDays": 0
   }
 }
