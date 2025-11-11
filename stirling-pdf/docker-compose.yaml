@@ -21,7 +21,7 @@ services:
       - SECURITY_OAUTH2_CLIENTID="$stirling_id"
       - SECURITY_OAUTH2_CLIENTSECRET="$stirling_secret"
       - SECURITY_OAUTH2_BLOCKREGISTRATION=false
-      - SECURITY_OAUTH2_SCOPES="openid,profile,email"
+      - SECURITY_OAUTH2_SCOPES=openid,profile,email
       - SECURITY_OAUTH2_USEASUSERNAME=email
       - SECURITY_OAUTH2_PROVIDER="Nora ID"
     labels:
