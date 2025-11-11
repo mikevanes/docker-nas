@@ -1,0 +1,38 @@
+services:
+  stirling-pdf:
+    image: docker.stirlingpdf.com/stirlingtools/stirling-pdf:latest
+    container_name: stirling-pdf
+    ports:
+      - "8082:8080"
+    networks:
+      - proxy_default
+    volumes:
+      - /mnt/user/appdata/StirlingPDF/trainingData:/usr/share/tessdata
+      - /mnt/user/appdata/StirlingPDF/StirlingPDF/extraConfigs:/configs
+      - /mnt/user/appdata/StirlingPDF/StirlingPDF/customFiles:/customFiles/
+      - /mnt/user/appdata/StirlingPDF/StirlingPDF/logs:/logs/
+      - /mnt/user/appdata/StirlingPDF/StirlingPDF/pipeline:/pipeline/
+    environment:
+      - SECURITY_ENABLELOGIN=true
+      - SECURITY_LOGINMETHOD=oauth2
+      - SECURITY_OAUTH2_ENABLED=true
+      - SECURITY_OAUTH2_ISSUER=https://auth.vanes.dev
+      - SECURITY_OAUTH2_CLIENTID=$stirling_id
+      - SECURITY_OAUTH2_CLIENTSECRET=$stirling_secret
+      - SECURITY_OAUTH2_AUTOCREATEUSER=true
+      - SECURITY_OAUTH2_BLOCKREGISTRATION=false
+      - SECURITY_OAUTH2_USEASUSERNAME=email
+      - SECURITY_OAUTH2_SCOPES=openid,profile,email
+      - SECURITY_OAUTH2_PROVIDER=NoraID
+      - LANGS=en_GB
+    labels:
+      glance.name: PDF Tools
+      glance.icon: si:pfsense
+      glance.url: https://pdf.vanes.dev
+      glance.description:
+      glance.id: PDFtools
+      glance.hide: false
+
+networks:
+  proxy_default:
+    external: true

@@ -2,3 +2,16 @@ name: test-app
 working_dir: test-app
 force_image_pull: true
 remove_orphans: true
+---
+name: it-tools
+working_dir: it-tools
+force_image_pull: true
+remove_orphans: true
+---
+name: stirling-pdf
+working_dir: stirling-pdf
+force_image_pull: true
+remove_orphans: true
+external_secrets:
+  stirling_id: 47d179d9-9018-437a-bc68-b392007de391
+  stirling_secret: ee4bf3d4-a418-43a8-a96f-b392007d4a39

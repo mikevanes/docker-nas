@@ -1,0 +1,20 @@
+services:
+  it-tools:
+    image: corentinth/it-tools:latest
+    container_name: it-tools
+    ports:
+      - "8080:80"
+    networks:
+      - proxy_default
+    restart: unless-stopped
+    labels:
+      glance.name: Tools
+      glance.icon: si:coder
+      glance.url: https://ittools.vanes.dev
+      glance.description:
+      glance.id: ittools
+      glance.hide: false
+
+networks:
+  proxy_default:
+    external: true
