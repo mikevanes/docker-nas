@@ -18,12 +18,12 @@ services:
       - SECURITY_OAUTH2_ENABLED=true
       - SECURITY_OAUTH2_AUTOCREATEUSER=false
       - SECURITY_OAUTH2_ISSUER=https://auth.vanes.dev
-      - SECURITY_OAUTH2_CLIENTID="$stirling_id"
-      - SECURITY_OAUTH2_CLIENTSECRET="$stirling_secret"
+      - SECURITY_OAUTH2_CLIENTID=$stirling_id
+      - SECURITY_OAUTH2_CLIENTSECRET=$stirling_secret
       - SECURITY_OAUTH2_BLOCKREGISTRATION=false
       - SECURITY_OAUTH2_SCOPES=openid,profile,email
       - SECURITY_OAUTH2_USEASUSERNAME=email
-      - SECURITY_OAUTH2_PROVIDER="Nora ID"
+      - SECURITY_OAUTH2_PROVIDER=Nora ID
     labels:
       glance.name: PDF Tools
       glance.icon: si:pfsense
