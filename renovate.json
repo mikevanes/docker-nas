@@ -8,13 +8,13 @@
     ":label(dependencies)",
     ":timezone(Europe/Amsterdam)"
   ],
-  "enabledManagers": ["dockerfile", "docker-compose"],
+  "enabledManagers": ["docker-compose"],
   "prHourlyLimit": 5,
   "prConcurrentLimit": 20,
   "packageRules": [
     {
       "matchManagers": ["docker-compose"],
-      "groupName": "Docker image updates"
+      "groupName": "All Docker image updates"
     },
     {
       "matchUpdateTypes": ["minor", "patch"],
@@ -26,6 +26,8 @@
       "automerge": false
     }
   ],
+  "rollbackPrs": true,
+  "stabilityDays": 2,
   "docker": {
     "pinDigests": false
   }
