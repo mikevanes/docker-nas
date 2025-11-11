@@ -12,6 +12,13 @@ services:
       - TSSERVER_LICENSE_ACCEPTED=accept
     volumes:
       - /mnt/user/appdata/ts6:/var/tsserver
+    labels:
+      glance.name: TeamSpeak 6
+      glance.icon: si:teamspeak
+      glance.url: https://vanes.dev
+      glance.description:
+      glance.id: teamspeak6
+      glance.hide: false
 
 networks:
   proxy_default:
