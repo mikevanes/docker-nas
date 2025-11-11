@@ -3,8 +3,6 @@ services:
     image: fosrl/newt:1.4.1
     container_name: newt
     restart: unless-stopped
-    env_file:
-      - stack.env
     environment:
       PANGOLIN_ENDPOINT: https://pangolin.vanes.dev
       NEWT_ID: $newt_id
