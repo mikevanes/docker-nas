@@ -13,7 +13,7 @@ services:
     volumes:
       - /mnt/user/appdata/ts6:/var/tsserver
     labels:
-      glance.name: TeamSpeak 6
+      glance.name: Teamspeak
       glance.icon: si:teamspeak
       glance.url: https://vanes.dev
       glance.description:
