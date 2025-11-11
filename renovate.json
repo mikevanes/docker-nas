@@ -1,6 +1,32 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
-  ]
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":separateMajorReleases",
+    ":label(dependencies)",
+    ":timezone(Europe/Amsterdam)"
+  ],
+  "enabledManagers": ["dockerfile", "docker-compose"],
+  "prHourlyLimit": 5,
+  "prConcurrentLimit": 20,
+  "packageRules": [
+    {
+      "matchManagers": ["docker-compose"],
+      "groupName": "Docker image updates"
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true,
+      "automergeType": "branch"
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false
+    }
+  ],
+  "docker": {
+    "pinDigests": false
+  }
 }
