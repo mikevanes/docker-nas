@@ -28,5 +28,5 @@ services:
       - /mnt/user/appdata/npm-letsencrypt:/etc/letsencrypt
     labels:
       glance.parent: pangolin
-      glance.name: NPM
+      glance.name: Nginx proxy manager
       glance.hide: "false"

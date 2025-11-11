@@ -11,14 +11,6 @@ external_secrets:
   stirling_id: 47d179d9-9018-437a-bc68-b392007de391
   stirling_secret: ee4bf3d4-a418-43a8-a96f-b392007d4a39
 ---
-name: proxy
-working_dir: proxy
-force_image_pull: true
-remove_orphans: true
-external_secrets:
-  newt_id: 031ae55a-46f2-4477-aafc-b392014165ba
-  newt_secret: 93ae014a-d464-4dd1-88fc-b3920141817a
----
 name: auth-providers
 working_dir: auth-providers
 force_image_pull: true
