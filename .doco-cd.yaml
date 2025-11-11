@@ -15,3 +15,22 @@ remove_orphans: true
 external_secrets:
   stirling_id: 47d179d9-9018-437a-bc68-b392007de391
   stirling_secret: ee4bf3d4-a418-43a8-a96f-b392007d4a39
+---
+name: proxy
+working_dir: proxy
+force_image_pull: true
+remove_orphans: true
+external_secrets:
+  newt_id: 031ae55a-46f2-4477-aafc-b392014165ba
+  newt_secret: 93ae014a-d464-4dd1-88fc-b3920141817a
+---
+name: auth
+working_dir: auth
+force_image_pull: true
+remove_orphans: true
+external_secrets:
+  tinyauth_auth_secret: 4cfa6623-a514-4e7e-96fe-b39201438787
+  tinyauth_oidc_id: 233069ae-f71c-434b-b85f-b3920143a2ca
+  tinyauth_oidc_secret: bcd706f1-a581-48f8-b8d6-b3920143b7d0
+---
+

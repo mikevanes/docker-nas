@@ -1,0 +1,62 @@
+services:
+  pocket-id:
+    image: ghcr.io/pocket-id/pocket-id:v1.7.0
+    container_name: pocketid
+    restart: unless-stopped
+    ports:
+      - "1411:1411"
+    volumes:
+      - "/mnt/user/appdata/pocketid/data:/app/data"
+    networks:
+      - proxy
+    environment:
+      APP_URL: https://auth.vanes.dev
+      TRUST_PROXY: "true"
+      PUID: "1000"
+      PGID: "1000"
+    healthcheck:
+      test: ["CMD", "/app/pocket-id", "healthcheck"]
+      interval: 90s
+      timeout: 5s
+      retries: 2
+      start_period: 10s
+    labels:
+      glance.name: PocketID
+      glance.icon: si:auth0
+      glance.url: https://auth.vanes.dev
+      glance.description: ""
+      glance.id: pocketid
+      glance.hide: "false"
+
+  tinyauth:
+    image: ghcr.io/steveiliop56/tinyauth:v3.6.2
+    container_name: tinyauth
+    restart: unless-stopped
+    environment:
+      SECRET: $tinyauth_auth_secret
+      APP_URL: https://tinyauth.vanes.dev
+      USERS: ""
+      GENERIC_CLIENT_ID: $tinyauth_oidc_id
+      GENERIC_CLIENT_SECRET: $tinyauth_oidc_secret
+      GENERIC_AUTH_URL: https://auth.vanes.dev/authorize
+      GENERIC_TOKEN_URL: https://auth.vanes.dev/api/oidc/token
+      GENERIC_USER_URL: https://auth.vanes.dev/api/oidc/userinfo
+      GENERIC_SCOPES: "openid email profile groups"
+      GENERIC_NAME: "Nora ID"
+      OAUTH_AUTO_REDIRECT: "generic"
+      DISABLE_CONTINUE: "true"
+      LOG_LEVEL: "0"
+    networks:
+      - proxy
+    labels:
+      glance.name: Tinyauth
+      glance.icon: si:authelia
+      glance.url: https://tinyauth.vanes.dev
+      glance.description: ""
+      glance.id: tinyauth
+      glance.hide: "false"
+
+networks:
+  proxy:
+    external: true
+    name: proxy_default
