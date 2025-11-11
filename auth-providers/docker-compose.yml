@@ -21,7 +21,7 @@ services:
       retries: 2
       start_period: 10s
     labels:
-      glance.name: PocketID
+      glance.name: Nora ID
       glance.icon: si:auth0
       glance.url: https://auth.vanes.dev
       glance.description: ""
