@@ -9,32 +9,49 @@
     ":timezone(Europe/Amsterdam)",
     "schedule:nonOfficeHours"
   ],
-  "enabledManagers": ["docker-compose"],
+  "enabledManagers": [
+    "docker-compose"
+  ],
   "prHourlyLimit": 5,
   "prConcurrentLimit": 20,
   "packageRules": [
     {
-      "matchManagers": ["docker-compose"],
+      "matchCategories": [
+        "docker"
+      ],
+      "pinDigests": true
+    },
+    {
+      "matchManagers": [
+        "docker-compose"
+      ],
       "groupName": "All Docker image updates"
     },
     {
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "automerge": true,
       "automergeType": "pr"
     },
     {
-      "matchUpdateTypes": ["major"],
+      "matchUpdateTypes": [
+        "major"
+      ],
       "automerge": false,
-      "labels": ["major-update", "needs-review"]
+      "labels": [
+        "major-update",
+        "needs-review"
+      ]
     }
   ],
   "rollbackPrs": true,
-  "stabilityDays": 2,
-  "docker": {
-    "pinDigests": true
-  },
+  "minimumReleaseAge": "2 days",
   "vulnerabilityAlerts": {
-    "labels": ["security"],
-    "stabilityDays": 0
+    "labels": [
+      "security"
+    ],
+    "minimumReleaseAge": null
   }
 }
