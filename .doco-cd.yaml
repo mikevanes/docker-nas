@@ -19,5 +19,10 @@ external_secrets:
   tinyauth_auth_secret: 4cfa6623-a514-4e7e-96fe-b39201438787
   tinyauth_oidc_id: 233069ae-f71c-434b-b85f-b3920143a2ca
   tinyauth_oidc_secret: bcd706f1-a581-48f8-b8d6-b3920143b7d0
+---
+name: teamspeak
+working_dir: teamspeak
+force_image_pull: true
+remove_orphans: true
 
 
