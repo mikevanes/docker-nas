@@ -1,0 +1,28 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:testing
+    container_name: vaultwarden
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    networks:
+      - proxy_default
+    environment:
+      DOMAIN: "https://vault.vanes.dev"
+      SIGNUPS_ALLOWED: "false"
+      SSO_ENABLED: "false"
+      ADMIN_TOKEN: $vaultwarden_admin_token
+      TZ: "Europe/Amsterdam"
+    volumes:
+      - /mnt/user/appdata/vaultwarden/data:/data
+    labels:
+      glance.name: "Bitwarden"
+      glance.description: ""
+      glance.url: "https://vault.vanes.dev"
+      glance.icon: "si:bitwarden"
+      glance.id: "bitwarden"
+      glance.hide: "false"
+
+networks:
+  proxy_default:
+    external: true

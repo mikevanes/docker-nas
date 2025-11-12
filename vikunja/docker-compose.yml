@@ -1,0 +1,55 @@
+services:
+  vikunja:
+    image: vikunja/vikunja:1.0.0-rc2
+    networks:
+      - proxy_default
+      - internal
+    environment:
+      VIKUNJA_SERVICE_PUBLICURL: https://vikunja.vanes.dev
+      VIKUNJA_DATABASE_HOST: db
+      VIKUNJA_DATABASE_PASSWORD: hQHPKY1kuDzDLdEqzVwmw1mqnMS9cPkr
+      VIKUNJA_DATABASE_TYPE: postgres
+      VIKUNJA_DATABASE_USER: vikunja
+      VIKUNJA_DATABASE_DATABASE: vikunja
+      VIKUNJA_SERVICE_JWTSECRET: $vikunja_jwt_secret
+    ports:
+      - 3456:3456
+    volumes:
+      - /mnt/user/appdata/vikunja:/app/vikunja/files
+      - /mnt/user/appdata/vikunja/config.yml:/app/vikunja/config.yml:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    labels:
+      glance.name: Vikunja
+      glance.url: https://vikunja.vanes.dev
+      glance.description: 
+      glance.icon: si:vikunja
+      glance.id: vikunja
+      glance.hide: false  
+    
+  db:
+    image: postgres:18
+    networks:
+      - internal
+    environment:
+      POSTGRES_PASSWORD: hQHPKY1kuDzDLdEqzVwmw1mqnMS9cPkr
+      POSTGRES_USER: vikunja
+    volumes:
+      - /mnt/user/appdata/vikunja/db:/var/lib/postgresql/
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -U $$POSTGRES_USER"]
+      interval: 2s
+      start_period: 30s
+    labels:
+      glance.parent: vikunja
+      glance.name: postgres
+      glance.hide: false
+
+networks:
+  internal:
+    external: false
+  proxy_default:
+    external: true

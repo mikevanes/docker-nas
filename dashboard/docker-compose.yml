@@ -1,0 +1,27 @@
+services:
+  glance:
+    container_name: glance
+    image: glanceapp/glance:v0.8.4
+    restart: unless-stopped
+    environment:
+      GITHUB_TOKEN: $glance_github_token
+      TZ: "Europe/Amsterdam"
+    networks:
+      - proxy_default
+      - default
+    volumes:
+      - /mnt/user/appdata/glance/config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8081:8080"
+    labels:
+      glance.name: "Glance"
+      glance.url: "http://tower.local:8081"
+      glance.icon: "si:glance"
+      glance.description: ""
+      glance.id: "glance"
+      glance.hide: "false"
+
+networks:
+  proxy_default:
+    external: true

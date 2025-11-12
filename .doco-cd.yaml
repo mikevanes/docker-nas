@@ -65,6 +65,33 @@ name: adguardhome
 working_dir: adguard
 force_image_pull: true
 remove_orphans: true
+---
+name: dashboard
+working_dir: dashboard
+force_image_pull: true
+remove_orphans: true
+external_secrets:
+  glance_github_token: 9c5b75f3-b6a3-41b8-9203-b39300817751
+---
+name: vaultwarden
+working_dir: vaultwarden
+force_image_pull: true
+remove_orphans: true
+external_secrets:
+  vaultwarden_admin_token: a7cb53a1-7a05-4433-a0de-b39300821cd0
+---
+name: vikunja
+working_dir: vikunja
+force_image_pull: true
+remove_orphans: true
+external_secrets:
+  vikunja_jwt_secret: ff8497e9-029d-4385-9c78-b3930083253f
+---
+name: radicale
+working_dir: radicale
+force_image_pull: true
+remove_orphans: true
+
 
 
 
