@@ -5,8 +5,8 @@ services:
     restart: unless-stopped
     environment:
       PANGOLIN_ENDPOINT: https://pangolin.vanes.dev
-      NEWT_ID: $newt_id
-      NEWT_SECRET: $newt_secret
+      NEWT_ID: $newt_id_secret
+      NEWT_SECRET: $newt_secret_secret
     labels:
       glance.name: Pangolin
       glance.description:
