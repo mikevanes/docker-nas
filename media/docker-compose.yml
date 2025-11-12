@@ -136,8 +136,8 @@ services:
         restart: true
     entrypoint: ["/bin/sh", "-c"]
     command: >
-      mkdir -p /mnt/debrid/decypharr;
       umount -l /mnt/debrid/decypharr 2>/dev/null || true;
+      sleep 3;
       rclone mount decypharr: /mnt/debrid/decypharr
       --config=/config/rclone/rclone.conf
       --uid=99 --gid=100
