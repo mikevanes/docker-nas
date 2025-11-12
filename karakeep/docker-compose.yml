@@ -1,6 +1,6 @@
 services:
   web:
-    image: ghcr.io/karakeep-app/karakeep:0.26.0
+    image: ghcr.io/karakeep-app/karakeep:0.28.0@sha256:cd2348520ba25bbee64199468cd41758ab325eecd6a3a5c40cd6443a1607f9e9
     container_name: karakeep
     restart: unless-stopped
     volumes:
@@ -33,7 +33,7 @@ services:
       glance.hide: "false"
 
   chrome:
-    image: gcr.io/zenika-hub/alpine-chrome:124
+    image: gcr.io/zenika-hub/alpine-chrome:124@sha256:1a0046448e0bb6c275c88f86e01faf0de62b02ec8572901256ada0a8c08be23f
     container_name: chrome
     restart: unless-stopped
     command:
@@ -49,7 +49,7 @@ services:
       glance.hide: "false"
 
   meilisearch:
-    image: getmeili/meilisearch:v1.17.1
+    image: getmeili/meilisearch:v1.24.0@sha256:d991eb07331e9d1f9cec7bc0f9523fd5d51aee3b223d997e0e66206361952056
     container_name: meilisearch
     restart: unless-stopped
     environment:

@@ -1,6 +1,6 @@
 services:
   plex:
-    image: plexinc/pms-docker:1.42.1.10060-4e8b05daf
+    image: plexinc/pms-docker:1.42.1.10060-4e8b05daf@sha256:4e704a2172129d8a6bc5b05ea201945b329bb6512f48a4e92ed4a4a787c35462
     container_name: plex
     networks:
       - proxy_default
@@ -44,7 +44,7 @@ services:
       glance.hide: "false"
 
   jellyseerr:
-    image: fallenbagel/jellyseerr:preview-OIDC
+    image: fallenbagel/jellyseerr:preview-OIDC@sha256:9f3195998306da6548fc3b2420d114dda64a6e904f41e911168788fb410a7972
     container_name: jellyseerr
     environment:
       - LOG_LEVEL=ERROR
@@ -67,7 +67,7 @@ services:
       glance.hide: "false"
 
   tautulli:
-    image: ghcr.io/tautulli/tautulli:v2.16.0
+    image: ghcr.io/tautulli/tautulli:v2.16.0@sha256:7e6ede32f7923e01899db906aa6a96d978a4a8df8e2ef0dcf44c92b2d0206221
     container_name: tautulli
     restart: unless-stopped
     networks:
@@ -90,7 +90,7 @@ services:
       glance.hide: "false"
 
   decypharr:
-    image: cy01/blackhole:v1.1.6
+    image: cy01/blackhole:v1.1.6@sha256:b9207450e8bd0dbc0f83e145aa5c487f5e5824e916d1f10349dd3386e8b769c7
     container_name: decypharr
     entrypoint: ["/bin/sh", "-c", "apk add --no-cache fuse3 fuse && exec /usr/bin/decypharr --config /app"]
     user: "0:0"
@@ -163,7 +163,7 @@ services:
   #     glance.hide: "false"
 
   prowlarr:
-    image: ghcr.io/hotio/prowlarr:release-2.1.5.5216
+    image: ghcr.io/hotio/prowlarr:release-2.1.5.5216@sha256:c9461e88006cb720c4061bd8982c436d1e8b981dd1ccbec90f6f866aa7f187c1
     container_name: prowlarr
     networks:
       - default
@@ -182,7 +182,7 @@ services:
       glance.hide: "false"
 
   flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:v3.4.4
+    image: ghcr.io/flaresolverr/flaresolverr:v3.4.5@sha256:4f4e5f759aa3a9a64305e99188ea1db1ec2944a5e7d290d2b089af5f2f6f48e4
     container_name: flaresolverr
     networks:
       - default
@@ -200,7 +200,7 @@ services:
       glance.hide: "false"
 
   radarr:
-    image: ghcr.io/hotio/radarr:release-5.28.0.10274
+    image: ghcr.io/hotio/radarr:release-5.28.0.10274@sha256:42ca21d9bab4df84af1898e7256256b85a04b207e72c620ac382ac4151d65dd0
     container_name: radarr
     networks:
       - default
@@ -223,7 +223,7 @@ services:
       glance.hide: "false"
 
   radarr-anime:
-    image: ghcr.io/hotio/radarr:release-5.28.0.10274
+    image: ghcr.io/hotio/radarr:release-5.28.0.10274@sha256:42ca21d9bab4df84af1898e7256256b85a04b207e72c620ac382ac4151d65dd0
     container_name: radaranime
     networks:
       - default
@@ -246,7 +246,7 @@ services:
       glance.hide: "false"
 
   sonarr:
-    image: ghcr.io/hotio/sonarr:release-4.0.16.2944
+    image: ghcr.io/hotio/sonarr:release-4.0.16.2944@sha256:20cf6013b2b35c035f9ce7d5e8149eccf03c933c58ea40a9bd397e57a6dee714
     container_name: sonarr
     networks:
       - default
@@ -269,7 +269,7 @@ services:
       glance.hide: "false"
 
   sonarranime:
-    image: ghcr.io/hotio/sonarr:release-4.0.16.2944
+    image: ghcr.io/hotio/sonarr:release-4.0.16.2944@sha256:20cf6013b2b35c035f9ce7d5e8149eccf03c933c58ea40a9bd397e57a6dee714
     container_name: sonarranime
     networks:
       - default

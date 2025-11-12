@@ -5,7 +5,7 @@ services:
       - br0
       - proxy_default
       - default
-    image: ghcr.io/home-assistant/home-assistant:2025.8
+    image: ghcr.io/home-assistant/home-assistant:2025.11@sha256:c11dd7c74039223c43079d700aa559d6dc61e8e0b38a08d651f91d1bc550cff5
     volumes:
       - /mnt/user/appdata/homeassistant:/config
       - /mnt/user/immich-photos/:/config/www/immich
@@ -23,7 +23,7 @@ services:
 
   zigbee2mqtt:
     container_name: zigbee2mqtt
-    image: ghcr.io/koenkk/zigbee2mqtt:2.6.0
+    image: ghcr.io/koenkk/zigbee2mqtt:2.6.3@sha256:3baac2a3b74a9945fbbcb665b3e6e0ace5df2d49b5502e3d26b66a5454316e81
     restart: unless-stopped
     volumes:
       - /mnt/user/appdata/homeassistant/z2m:/app/data
@@ -40,7 +40,7 @@ services:
       glance.hide: "false"
 
   mqtt:
-    image: eclipse-mosquitto:2.0.22
+    image: eclipse-mosquitto:2.0.22@sha256:fd9982f5ed92a6c2a90805601d2275f8fbd7f2d47c4cb3836f7db0bdc7a91bec
     container_name: mqtt
     ports:
       - "1883:1883"
@@ -57,7 +57,7 @@ services:
 
   immich-server:
     container_name: immich_server
-    image: ghcr.io/immich-app/immich-server:v1.138.0
+    image: ghcr.io/immich-app/immich-server:v1.144.1@sha256:f34203f6c2db130c26480ff21c412c6f0c37c24ee5261f6a6e4fe1eecaa921c0
     networks:
       - proxy_default
       - default
@@ -88,7 +88,7 @@ services:
 
   immich-machine-learning:
     container_name: immich_machine_learning
-    image: ghcr.io/immich-app/immich-machine-learning:v1.138.0
+    image: ghcr.io/immich-app/immich-machine-learning:v1.144.1@sha256:21b6a0bf02426336f456e8dca43c55b6a79b8e01ee2c25f91bc817fc3a745e52
     volumes:
       - /mnt/user/appdata/immich/ml/:/cache
     restart: always
@@ -97,7 +97,7 @@ services:
 
   redis:
     container_name: immich_redis
-    image: docker.io/valkey/valkey:8-bookworm@sha256:facc1d2c3462975c34e10fccb167bfa92b0e0dbd992fc282c29a61c3243afb11
+    image: docker.io/valkey/valkey:8-bookworm@sha256:fea8b3e67b15729d4bb70589eb03367bab9ad1ee89c876f54327fc7c6e618571
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
     restart: always
@@ -108,7 +108,7 @@ services:
 
   database:
     container_name: immich_postgres
-    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:5f6a838e4e44c8e0e019d0ebfe3ee8952b69afc2809b2c25f7b0119641978e91
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: HFA6hce7dqg.qyc5fbt
