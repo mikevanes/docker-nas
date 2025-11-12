@@ -91,6 +91,12 @@ name: radicale
 working_dir: radicale
 force_image_pull: true
 remove_orphans: true
+---
+name: media
+working_dir: media
+force_image_pull: true
+remove_orphans: true
+
 
 
 
