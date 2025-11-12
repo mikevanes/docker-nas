@@ -92,7 +92,7 @@ services:
   decypharr:
     image: cy01/blackhole:v1.1.6
     user: "0:0"
-    entrypoint: ["/bin/sh", "-c", "apk add --no-cache fuse && exec /entrypoint.sh"]
+    entrypoint: ["/bin/sh", "-c", "apk add --no-cache fuse3 fuse && exec /usr/bin/decypharr --config /app"]
     container_name: decypharr
     networks:
       - default
