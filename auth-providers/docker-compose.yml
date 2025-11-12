@@ -29,7 +29,7 @@ services:
       glance.hide: "false"
 
   tinyauth:
-    image: ghcr.io/steveiliop56/tinyauth:v3.6.2@sha256:6fb523a7bda58f1e6072c3a1c4bc0186ae0c45e79802ca6ac7d21136775807f3
+    image: ghcr.io/steveiliop56/tinyauth:v4.0.1@sha256:815a53c517b4b8f29c02245fc89185186d12162f6bfc2e7566acf888c72ff14b
     container_name: tinyauth
     restart: unless-stopped
     environment:
