@@ -104,6 +104,7 @@ services:
       - "8282:8282"
     volumes:
       - /mnt/user/dmb:/mnt/debrid:rshared  # main mount folder
+      - /mnt/user/rclonecache:/cache
       - /mnt/user/appdata/decypharr:/app
     restart: unless-stopped
     labels:
