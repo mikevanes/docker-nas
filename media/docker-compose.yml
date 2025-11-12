@@ -106,6 +106,7 @@ services:
       - PUID=99
       - PGID=100
       - TZ=Europe/Amsterdam
+    privileged: true
     ports:
       - "8282:8282"
     volumes:
