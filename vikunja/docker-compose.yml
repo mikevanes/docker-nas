@@ -1,6 +1,6 @@
 services:
   vikunja:
-    image: vikunja/vikunja:1.0.0-rc2
+    image: vikunja/vikunja:1.0.0-rc2@sha256:3839751335af9e8f8f7105021ef2c7bd1c9cf6fcf01ec122cd6431f7ba24a756
     networks:
       - proxy_default
       - internal
