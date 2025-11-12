@@ -92,7 +92,8 @@ services:
   decypharr:
     image: cy01/blackhole:v1.1.6
     container_name: decypharr
-    user: "99:100"
+    entrypoint: ["/bin/sh", "-c", "apk add --no-cache fuse3 fuse && exec /usr/bin/decypharr --config /app"]
+    user: "0:0"
     networks:
       - default
     devices:
@@ -109,7 +110,7 @@ services:
     ports:
       - "8282:8282"
     volumes:
-      - /mnt/:/mnt:rshared
+      - /mnt/cache/dmb:/mnt/debrid:rshared
       - /mnt/cache/rclonecache:/cache
       - /mnt/user/appdata/decypharr:/app
     restart: unless-stopped
