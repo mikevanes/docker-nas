@@ -91,7 +91,6 @@ services:
 
   decypharr:
     image: cy01/blackhole:v1.1.6
-    entrypoint: ["/bin/sh", "-c", "apk add --no-cache fuse && exec /entrypoint.sh"]
     container_name: decypharr
     user: "99:100"
     networks:
@@ -107,11 +106,11 @@ services:
       - PUID=99
       - PGID=100
       - TZ=Europe/Amsterdam
-    privileged: true
     ports:
       - "8282:8282"
     volumes:
       - /mnt/cache/dmb:/mnt/debrid:rshared  # main mount folder
+      - /usr/bin/fusermount:/usr/bin/fusermount:ro
       - /mnt/cache/rclonecache:/cache
       - /mnt/user/appdata/decypharr:/app
     restart: unless-stopped
