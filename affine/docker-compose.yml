@@ -4,6 +4,7 @@ services:
     container_name: affine
     networks:
       - proxy_default
+      - default
     ports:
       - "3010:3010"
     depends_on:

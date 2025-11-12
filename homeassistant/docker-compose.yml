@@ -4,6 +4,7 @@ services:
     networks:
       - br0
       - proxy_default
+      - default
     image: ghcr.io/home-assistant/home-assistant:2025.8
     volumes:
       - /mnt/user/appdata/homeassistant:/config
@@ -59,6 +60,7 @@ services:
     image: ghcr.io/immich-app/immich-server:v1.138.0
     networks:
       - proxy_default
+      - default
     volumes:
       - /mnt/user/immich-photos/:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro

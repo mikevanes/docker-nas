@@ -4,7 +4,7 @@ services:
     container_name: norish-app
     restart: unless-stopped
     networks:
-      - internal
+      - default
       - proxy_default
     ports:
       - 3011:3000
@@ -78,8 +78,6 @@ services:
     image: postgres:17-alpine
     container_name: norish-db
     restart: unless-stopped
-    networks:
-      - internal
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: norish
@@ -90,7 +88,5 @@ services:
       - "5433:5432"
 
 networks:
-  internal:
-    external: false
   proxy_default:
     external: true
