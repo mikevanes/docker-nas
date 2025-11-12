@@ -96,6 +96,8 @@ name: media
 working_dir: media
 force_image_pull: true
 remove_orphans: true
+# fusermount -u /mnt/user/dmb/decypharr 2>/dev/null || umount -l /mnt/user/dmb/decypharr 
+# To unmount after redeploy
 
 
 

@@ -99,10 +99,11 @@ services:
       - UMASK=002
       - PUID=99
       - PGID=100
+      - TZ=Europe/Amsterdam
     ports:
       - "8282:8282"
     volumes:
-      - /mnt/user/dmb:/mnt/debrid:rslave
+      - /mnt/user/dmb:/mnt/debrid:rshared  # main mount folder
       - /mnt/user/appdata/decypharr:/app
     restart: unless-stopped
     labels:
@@ -110,48 +111,48 @@ services:
       glance.name: Blackhole
       glance.hide: "false"
 
-  rclone:
-    image: rclone/rclone:1.71.2
-    container_name: rclone
-    restart: unless-stopped
-    networks:
-      - default
-    environment:
-      - TZ=Europe/Amsterdam
-    ports:
-      - "5572:5572"
-    volumes:
-      - /mnt/user/dmb:/mnt/debrid:rshared
-      - /mnt/user/appdata/rclone/rclone.conf:/config/rclone/rclone.conf
-      - /mnt/user/rclonecache:/cache
-    cap_add:
-      - SYS_ADMIN
-    security_opt:
-      - apparmor:unconfined
-    devices:
-      - /dev/fuse:/dev/fuse:rwm
-    depends_on:
-      decypharr:
-        condition: service_healthy
-        restart: true
-    command: >
-      mount decypharr: /mnt/debrid/decypharr
-      --config=/config/rclone/rclone.conf
-      --uid=99 --gid=100
-      --allow-other
-      --vfs-cache-mode full
-      --vfs-cache-max-age 12h
-      --vfs-read-chunk-size 1M
-      --vfs-read-chunk-size-limit 128M
-      --vfs-read-ahead 4M
-      --vfs-cache-max-size 300G
-      --cache-dir=/cache
-      --log-level ERROR
-      --rc --rc-addr :5572 --rc-no-auth
-    labels:
-      glance.parent: plex
-      glance.name: Rclone
-      glance.hide: "false"
+  # rclone:
+  #   image: rclone/rclone:1.71.2
+  #   container_name: rclone
+  #   restart: unless-stopped
+  #   networks:
+  #     - default
+  #   environment:
+  #     - TZ=Europe/Amsterdam
+  #   ports:
+  #     - "5572:5572"
+  #   volumes:
+  #     - /mnt/user/dmb:/mnt/debrid:rshared
+  #     - /mnt/user/appdata/rclone/rclone.conf:/config/rclone/rclone.conf
+  #     - /mnt/user/rclonecache:/cache
+  #   cap_add:
+  #     - SYS_ADMIN
+  #   security_opt:
+  #     - apparmor:unconfined
+  #   devices:
+  #     - /dev/fuse:/dev/fuse:rwm
+  #   depends_on:
+  #     decypharr:
+  #       condition: service_healthy
+  #       restart: true
+  #   command: >
+  #     mount decypharr: /mnt/debrid/decypharr
+  #     --config=/config/rclone/rclone.conf
+  #     --uid=99 --gid=100
+  #     --allow-other
+  #     --vfs-cache-mode full
+  #     --vfs-cache-max-age 12h
+  #     --vfs-read-chunk-size 1M
+  #     --vfs-read-chunk-size-limit 128M
+  #     --vfs-read-ahead 4M
+  #     --vfs-cache-max-size 300G
+  #     --cache-dir=/cache
+  #     --log-level ERROR
+  #     --rc --rc-addr :5572 --rc-no-auth
+  #   labels:
+  #     glance.parent: plex
+  #     glance.name: Rclone
+  #     glance.hide: "false"
 
   prowlarr:
     image: ghcr.io/hotio/prowlarr:release-2.1.5.5216
