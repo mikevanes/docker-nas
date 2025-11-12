@@ -69,6 +69,15 @@ services:
     depends_on:
       - redis
       - database
+    environment:
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_USERNAME: HFA6hce7dqg.qyc5fbt
+      DB_PASSWORD: postgres
+      DB_DATABASE_NAME: immich
+      REDIS_HOSTNAME: redis
+      REDIS_PORT: 6379
+      TZ: Europe/Amsterdam
     restart: always
     healthcheck:
       disable: false
