@@ -60,6 +60,12 @@ external_secrets:
   norish_encryption_key: 1c88240e-202d-4cb2-942a-b3930075a800
   norish_hmac_key: f6dbe037-07b4-46db-a6e6-b3930075b46e
   openai_api_key: 39931705-3080-49fc-bcb6-b3930073bb3b
+---
+name: adguardhome
+working_dir: adguard
+force_image_pull: true
+remove_orphans: true
+
 
 
 
