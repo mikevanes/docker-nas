@@ -95,6 +95,12 @@ services:
     user: "99:100"
     networks:
       - default
+    devices:
+      - /dev/fuse:/dev/fuse:rwm
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
     environment:
       - UMASK=002
       - PUID=99
