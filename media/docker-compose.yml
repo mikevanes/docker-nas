@@ -136,7 +136,7 @@ services:
         restart: true
     entrypoint: ["/bin/sh", "-c"]
     command: >
-      fusermount -u /mnt/debrid/decypharr 2>/dev/null || umount -l /mnt/debrid/decypharr 2>/dev/null || true;
+      umount -l /mnt/debrid/decypharr 2>/dev/null || true;
       rclone mount decypharr: /mnt/debrid/decypharr
       --config=/config/rclone/rclone.conf
       --uid=99 --gid=100
@@ -150,8 +150,6 @@ services:
       --cache-dir=/cache
       --log-level ERROR
       --rc --rc-addr :5572 --rc-no-auth
-
-
     labels:
       glance.parent: plex
       glance.name: Rclone
