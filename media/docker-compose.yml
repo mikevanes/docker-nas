@@ -1,0 +1,287 @@
+version: "3.8"
+
+services:
+  plex:
+    image: plexinc/pms-docker:1.42.1.10060-4e8b05daf
+    container_name: plex
+    networks:
+      - proxy_default
+      - default
+    ports:
+      - "32400:32400/tcp"
+      - "8324:8324/tcp"
+      - "32469:32469/tcp"
+      - "1900:1900/udp"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
+    devices:
+      - /dev/dri:/dev/dri
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /mnt/user/appdata/plexmediaserver:/config
+      - /mnt/user/appdata/plexmediaserver/transcode:/transcode
+      - /mnt/user/dmb:/mnt/debrid:rslave
+    restart: unless-stopped
+    depends_on:
+      decypharr:
+        condition: service_healthy
+        restart: true
+    healthcheck:
+      test: ["CMD", "curl", "--connect-timeout", "15", "--silent", "--show-error", "--fail", "http://localhost:32400/identity"]
+      interval: 1m
+      timeout: 15s
+      retries: 3
+      start_period: 1m
+    labels:
+      glance.name: Plex
+      glance.icon: si:youtube
+      glance.url: https://overseerr.vanes.dev
+      glance.id: plex
+      glance.hide: "false"
+
+  jellyseerr:
+    image: fallenbagel/jellyseerr:preview-OIDC
+    container_name: jellyseerr
+    environment:
+      - LOG_LEVEL=ERROR
+      - TZ=Europe/Amsterdam
+    ports:
+      - "5055:5055"
+    networks:
+      - proxy_default
+      - default
+    volumes:
+      - /mnt/user/appdata/jellyseerr/config:/app/config
+    restart: unless-stopped
+    depends_on:
+      plex:
+        condition: service_healthy
+        restart: true
+    labels:
+      glance.parent: plex
+      glance.name: Jellyseerr
+      glance.hide: "false"
+
+  tautulli:
+    image: ghcr.io/tautulli/tautulli:v2.16.0
+    container_name: tautulli
+    restart: unless-stopped
+    networks:
+      - default
+    environment:
+      - TZ=Europe/Amsterdam
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - "8181:8181"
+    volumes:
+      - /mnt/user/appdata/tautulli:/config
+    depends_on:
+      plex:
+        condition: service_healthy
+        restart: true
+    labels:
+      glance.parent: plex
+      glance.name: Tautulli
+      glance.hide: "false"
+
+  decypharr:
+    image: cy01/blackhole:v1.1.6
+    container_name: decypharr
+    user: "99:100"
+    networks:
+      - default
+    environment:
+      - UMASK=002
+      - PUID=99
+      - PGID=100
+    ports:
+      - "8282:8282"
+    volumes:
+      - /mnt/user/dmb:/mnt/debrid:rslave
+      - /mnt/user/appdata/decypharr:/app
+    restart: unless-stopped
+    labels:
+      glance.parent: plex
+      glance.name: Blackhole
+      glance.hide: "false"
+
+  rclone:
+    image: rclone/rclone:1.71.2
+    container_name: rclone
+    restart: unless-stopped
+    networks:
+      - default
+    environment:
+      - TZ=Europe/Amsterdam
+    ports:
+      - "5572:5572"
+    volumes:
+      - /mnt/user/dmb:/mnt/debrid:rshared
+      - /mnt/user/appdata/rclone/rclone.conf:/config/rclone/rclone.conf
+      - /mnt/user/rclonecache:/cache
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    devices:
+      - /dev/fuse:/dev/fuse:rwm
+    depends_on:
+      decypharr:
+        condition: service_healthy
+        restart: true
+    command: >
+      mount decypharr: /mnt/debrid/decypharr
+      --config=/config/rclone/rclone.conf
+      --uid=99 --gid=100 --allow-other
+      --vfs-cache-mode full
+      --vfs-read-chunk-size 1M
+      --vfs-read-chunk-size-limit 128M
+      --vfs-read-ahead 4M
+      --vfs-cache-max-size 300G
+      --cache-dir=/cache
+      --log-level ERROR
+      --rc --rc-addr :5572 --rc-no-auth
+    labels:
+      glance.parent: plex
+      glance.name: Rclone
+      glance.hide: "false"
+
+  prowlarr:
+    image: ghcr.io/hotio/prowlarr:release-2.1.5.5216
+    container_name: prowlarr
+    networks:
+      - default
+    environment:
+      - PUID=1000
+      - PGID=1000
+    ports:
+      - "9696:9696"
+    restart: unless-stopped
+    volumes:
+      - /mnt/user/appdata/prowlarr/Definitions/Custom:/Custom
+      - /mnt/user/appdata/prowlarr:/config
+    labels:
+      glance.parent: plex
+      glance.name: Prowlarr
+      glance.hide: "false"
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:v3.4.4
+    container_name: flaresolverr
+    networks:
+      - default
+    environment:
+      - LOG_LEVEL=info
+      - LOG_HTML=false
+      - CAPTCHA_SOLVER=none
+      - TZ=Europe/Amsterdam
+    ports:
+      - "8191:8191"
+    restart: unless-stopped
+    labels:
+      glance.parent: plex
+      glance.name: Flaresolverr
+      glance.hide: "false"
+
+  radarr:
+    image: ghcr.io/hotio/radarr:release-5.28.0.10274
+    container_name: radarr
+    networks:
+      - default
+    environment:
+      - PUID=99
+      - PGID=100
+    ports:
+      - "7878:7878"
+    restart: unless-stopped
+    volumes:
+      - /mnt/user/dmb:/mnt/debrid:rslave
+      - /mnt/user/appdata/radarr:/config
+    depends_on:
+      decypharr:
+        condition: service_healthy
+        restart: true
+    labels:
+      glance.parent: plex
+      glance.name: Radarr
+      glance.hide: "false"
+
+  radarr-anime:
+    image: ghcr.io/hotio/radarr:release-5.28.0.10274
+    container_name: radaranime
+    networks:
+      - default
+    environment:
+      - PUID=99
+      - PGID=100
+    ports:
+      - "7979:7878"
+    restart: unless-stopped
+    volumes:
+      - /mnt/user/dmb:/mnt/debrid:rslave
+      - /mnt/user/appdata/radarranime:/config
+    depends_on:
+      decypharr:
+        condition: service_healthy
+        restart: true
+    labels:
+      glance.parent: plex
+      glance.name: Radarr-anime
+      glance.hide: "false"
+
+  sonarr:
+    image: ghcr.io/hotio/sonarr:release-4.0.16.2944
+    container_name: sonarr
+    networks:
+      - default
+    environment:
+      - PUID=99
+      - PGID=100
+    ports:
+      - "8989:8989"
+    restart: unless-stopped
+    volumes:
+      - /mnt/user/dmb:/mnt/debrid:rslave
+      - /mnt/user/appdata/sonarr:/config
+    depends_on:
+      decypharr:
+        condition: service_healthy
+        restart: true
+    labels:
+      glance.parent: plex
+      glance.name: Sonarr
+      glance.hide: "false"
+
+  sonarranime:
+    image: ghcr.io/hotio/sonarr:release-4.0.16.2944
+    container_name: sonarranime
+    networks:
+      - default
+    environment:
+      - PUID=99
+      - PGID=100
+    ports:
+      - "9090:8989"
+    restart: unless-stopped
+    volumes:
+      - /mnt/user/dmb:/mnt/debrid:rslave
+      - /mnt/user/appdata/sonarranime:/config
+    depends_on:
+      decypharr:
+        condition: service_healthy
+        restart: true
+    labels:
+      glance.parent: plex
+      glance.name: Sonarr-anime
+      glance.hide: "false"
+
+networks:
+  proxy_default:
+    external: true
