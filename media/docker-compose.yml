@@ -134,21 +134,24 @@ services:
       decypharr:
         condition: service_healthy
         restart: true
+    entrypoint: ["/bin/sh", "-c"]
     command: >
-      sh -c "fusermount -u /mnt/debrid/decypharr 2>/dev/null || umount -l /mnt/debrid/decypharr 2>/dev/null || true;
-         rclone mount decypharr: /mnt/debrid/decypharr
-         --config=/config/rclone/rclone.conf
-         --uid=99 --gid=100
-         --allow-other
-         --vfs-cache-mode full
-         --vfs-cache-max-age 12h
-         --vfs-read-chunk-size 1M
-         --vfs-read-chunk-size-limit 128M
-         --vfs-read-ahead 4M
-         --vfs-cache-max-size 300G
-         --cache-dir=/cache
-         --log-level ERROR
-         --rc --rc-addr :5572 --rc-no-auth"
+      fusermount -u /mnt/debrid/decypharr 2>/dev/null || umount -l /mnt/debrid/decypharr 2>/dev/null || true;
+      rclone mount decypharr: /mnt/debrid/decypharr
+      --config=/config/rclone/rclone.conf
+      --uid=99 --gid=100
+      --allow-other
+      --vfs-cache-mode full
+      --vfs-cache-max-age 12h
+      --vfs-read-chunk-size 1M
+      --vfs-read-chunk-size-limit 128M
+      --vfs-read-ahead 4M
+      --vfs-cache-max-size 300G
+      --cache-dir=/cache
+      --log-level ERROR
+      --rc --rc-addr :5572 --rc-no-auth
+
+
     labels:
       glance.parent: plex
       glance.name: Rclone
