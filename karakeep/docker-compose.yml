@@ -1,0 +1,66 @@
+services:
+  web:
+    image: ghcr.io/karakeep-app/karakeep:0.26.0
+    container_name: karakeep
+    restart: unless-stopped
+    volumes:
+      - /mnt/user/appdata/karakeep/data:/data
+    ports:
+      - "3002:3000"
+    networks:
+      - proxy_default
+    environment:
+      MEILI_ADDR: http://meilisearch:7700
+      BROWSER_WEB_URL: http://chrome:9222
+      DATA_DIR: /data
+      NEXTAUTH_SECRET: $karakeep_auth_secret
+      MEILI_MASTER_KEY: 4RLNGew2TvVhruTueZGd7MUfnyyvEb
+      NEXTAUTH_URL: https://bookmarks.vanes.dev
+      OPENAI_API_KEY: $openai_api_key
+      DISABLE_SIGNUPS: "false"
+      DISABLE_PASSWORD_AUTH: "true"
+      OAUTH_WELLKNOWN_URL: https://auth.vanes.dev/.well-known/openid-configuration
+      OAUTH_CLIENT_SECRET: $karakeep_oidc_secret
+      OAUTH_CLIENT_ID: $karakeep_oidc_id
+      OAUTH_PROVIDER_NAME: Nora ID
+    labels:
+      glance.name: Karakeep
+      glance.icon: si:bookstack
+      glance.url: https://bookmarks.vanes.dev
+      glance.description: ""
+      glance.id: karakeep
+      glance.hide: "false"
+
+  chrome:
+    image: gcr.io/zenika-hub/alpine-chrome:124
+    container_name: chrome
+    restart: unless-stopped
+    command:
+      - --no-sandbox
+      - --disable-gpu
+      - --disable-dev-shm-usage
+      - --remote-debugging-address=0.0.0.0
+      - --remote-debugging-port=9222
+      - --hide-scrollbars
+    labels:
+      glance.parent: karakeep
+      glance.name: Chrome
+      glance.hide: "false"
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.17.1
+    container_name: meilisearch
+    restart: unless-stopped
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+      MEILI_MASTER_KEY: 4RLNGew2TvVhruTueZGd7MUfnyyvEb
+    volumes:
+      - /mnt/user/appdata/melisearch/:/meili_data
+    labels:
+      glance.parent: karakeep
+      glance.name: Meilisearch
+      glance.hide: "false"
+
+networks:
+  proxy_default:
+    external: true

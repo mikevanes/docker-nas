@@ -1,0 +1,119 @@
+services:
+  homeassistant:
+    container_name: homeassistant
+    networks:
+      - br0
+      - proxy_default
+    image: ghcr.io/home-assistant/home-assistant:2025.8
+    volumes:
+      - /mnt/user/appdata/homeassistant:/config
+      - /mnt/user/immich-photos/:/config/www/immich
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    labels:
+      glance.name: homeassistant
+      glance.url: http://homeassistant.local:8123
+      glance.description: ""
+      glance.icon: si:homeassistant
+      glance.id: homeassistant
+      glance.hide: "false"
+
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    image: ghcr.io/koenkk/zigbee2mqtt:2.6.0
+    restart: unless-stopped
+    volumes:
+      - /mnt/user/appdata/homeassistant/z2m:/app/data
+      - /run/udev:/run/udev:ro
+    ports:
+      - "8383:8080"
+    environment:
+      - TZ=Europe/Amsterdam
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+    labels:
+      glance.parent: homeassistant
+      glance.name: Zigbee2MQTT
+      glance.hide: "false"
+
+  mqtt:
+    image: eclipse-mosquitto:2.0.22
+    container_name: mqtt
+    ports:
+      - "1883:1883"
+      - "9002:9001"
+    volumes:
+      - /mnt/user/appdata/homeassistant/mqtt/config:/mosquitto/config:rw
+      - /mnt/user/appdata/homeassistant/mqtt/data:/mosquitto/data:rw
+      - /mnt/user/appdata/homeassistant/mqtt/log:/mosquitto/log:rw
+    restart: unless-stopped
+    labels:
+      glance.parent: homeassistant
+      glance.name: MQTT
+      glance.hide: "false"
+
+  immich-server:
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:v1.138.0
+    networks:
+      - proxy_default
+    volumes:
+      - /mnt/user/immich-photos/:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "2283:2283"
+    depends_on:
+      - redis
+      - database
+    restart: always
+    healthcheck:
+      disable: false
+    labels:
+      glance.parent: homeassistant
+      glance.name: Immich
+      glance.hide: "false"
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    image: ghcr.io/immich-app/immich-machine-learning:v1.138.0
+    volumes:
+      - /mnt/user/appdata/immich/ml/:/cache
+    restart: always
+    healthcheck:
+      disable: false
+
+  redis:
+    container_name: immich_redis
+    image: docker.io/valkey/valkey:8-bookworm@sha256:facc1d2c3462975c34e10fccb167bfa92b0e0dbd992fc282c29a61c3243afb11
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    restart: always
+    labels:
+      glance.parent: homeassistant
+      glance.name: Immich Redis
+      glance.hide: "false"
+
+  database:
+    container_name: immich_postgres
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:5f6a838e4e44c8e0e019d0ebfe3ee8952b69afc2809b2c25f7b0119641978e91
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: HFA6hce7dqg.qyc5fbt
+      POSTGRES_DB: immich
+      POSTGRES_INITDB_ARGS: --data-checksums
+    volumes:
+      - /mnt/user/appdata/immich/db:/var/lib/postgresql/data
+    shm_size: 128mb
+    restart: always
+    labels:
+      glance.parent: homeassistant
+      glance.name: Immich DB
+      glance.hide: "false"
+
+networks:
+  proxy_default:
+    external: true
+  br0:
+    external: true

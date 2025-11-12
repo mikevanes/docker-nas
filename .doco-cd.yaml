@@ -24,5 +24,44 @@ name: teamspeak
 working_dir: teamspeak
 force_image_pull: true
 remove_orphans: true
+---
+name: homeassistant
+working_dir: homeassistant
+force_image_pull: true
+remove_orphans: true
+---
+name: karakeep
+working_dir: karakeep
+force_image_pull: true
+remove_orphans: true
+external_secrets:
+  karakeep_auth_secret: cc41cd8a-72ea-4862-9c9b-b39300737163
+  karakeep_oidc_id: fdd96390-59f9-4f06-9374-b3930073cfea
+  karakeep_oidc_secret: 951233e3-d706-4c0f-9a07-b3930073fc59
+  openai_api_key: 39931705-3080-49fc-bcb6-b3930073bb3b
+---
+name: affine
+working_dir: affine
+force_image_pull: true
+remove_orphans: true
+---
+name: norish
+working_dir: norish
+force_image_pull: true
+remove_orphans: true
+external_secrets:
+  norish_oidc_id: 7e338863-19e6-4211-8cf1-b3930075c28f
+  norish_oidc_secret: ca926dd0-fc9f-4e33-b9cf-b3930075d2bd
+  norish_gh_id: 9f0dcbbc-8721-499a-bcf5-b3930075facf
+  norish_gh_secret: 52bee900-42d7-46e3-bdaf-b39300760841
+  norish_google_id: b65657c2-1af0-4224-91e7-b39300762cba
+  norish_google_secret: 476f774c-0165-4741-88dc-b39300763a1e
+  norish_auth_secret: a5ed8e6f-3d8c-4c6f-9d76-b393007593ce
+  norish_encryption_key: 1c88240e-202d-4cb2-942a-b3930075a800
+  norish_hmac_key: f6dbe037-07b4-46db-a6e6-b3930075b46e
+  openai_api_key: 39931705-3080-49fc-bcb6-b3930073bb3b
+
+
+
 
 

@@ -1,0 +1,96 @@
+services:
+  norish:
+    image: norishapp/norish:latest
+    container_name: norish-app
+    restart: unless-stopped
+    networks:
+      - internal
+      - proxy_default
+    ports:
+      - 3011:3000
+    volumes:
+      - /mnt/cache/appdata/norish/uploads:/app/uploads
+    environment:
+      # ------------------------------
+      # Core
+      # ------------------------------
+      AUTH_URL: https://norish.app
+      RECIPES_DISK_DIR: /app/uploads
+      IMPORT_API_TOKEN: 0ZVLb3Phism51RuWOAuuwsc5oxNZ11qx
+      
+      # ------------------------------
+      # Database
+      # ------------------------------
+      DATABASE_URL: postgres://postgres:norish@db:5432/norish
+
+      # ------------------------------
+      # Authentication Providers
+      # ------------------------------
+      NEXT_PUBLIC_AUTH_PROVIDERS: oidc,github,google
+      ENABLE_REGISTRATION: "true"
+
+      # ------------------------------
+      # OIDC - optional - One of three providers is required
+      # ------------------------------
+      OIDC_NAME: NoraID
+      OIDC_ISSUER: https://auth.vanes.dev
+      OIDC_CLIENT_ID: $norish_oidc_id
+      OIDC_CLIENT_SECRET: $norish_oidc_secret
+
+      # ------------------------------
+      # OIDC - GitHub - optional
+      # ------------------------------
+      GITHUB_CLIENT_ID: $norish_gh_id
+      GITHUB_CLIENT_SECRET: $norish_gh_secret
+
+      # ------------------------------
+      # OIDC - Google - optional
+      # ------------------------------
+      GOOGLE_CLIENT_ID: $norish_google_id
+      GOOGLE_CLIENT_SECRET: $norish_google_secret
+
+      # ------------------------------
+      # Encryption & Security
+      # ------------------------------
+      AUTH_SECRET: $norish_auth_secret
+      ENCRYPTION_KEY: $norish_encryption_key
+      HMAC_KEY: $norish_hmac_key
+
+      # ------------------------------
+      # AI Provider (optional)
+      # ------------------------------
+      OPENAI_API_KEY: $openai_api_key
+      OPENAI_MODEL: gpt-5-mini
+      AI_ENABLED: "false"
+
+      # ------------------------------
+      # Content Detection (optional)
+      # ------------------------------
+      CONTENT_INGREDIENTS: "ingredients,instructions,servings"
+
+    depends_on:
+      - db
+
+  # ------------------------------
+  # Database
+  # ------------------------------
+  db:
+    image: postgres:17-alpine
+    container_name: norish-db
+    restart: unless-stopped
+    networks:
+      - internal
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: norish
+      POSTGRES_DB: norish
+    volumes:
+      - /mnt/cache/appdata/norish/db:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+networks:
+  internal:
+    external: false
+  proxy_default:
+    external: true
