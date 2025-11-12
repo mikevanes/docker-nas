@@ -1,6 +1,6 @@
 services:
   newt:
-    image: fosrl/newt:1.4.1
+    image: fosrl/newt:1.6.0@sha256:18ec2c3646d09f2dc2bc4b764cb2d625d822d5dadfaeae07c9a021ae89b564c3
     container_name: newt
     restart: unless-stopped
     environment:
@@ -16,7 +16,7 @@ services:
       glance.hide: "false"
 
   npm:
-    image: jc21/nginx-proxy-manager:2.12.6
+    image: jc21/nginx-proxy-manager:2.13.2@sha256:342e8cfaa072e5dcdf26030279cbcd7e993b7926cb49018f4872e8cc72e87288
     container_name: npm
     restart: unless-stopped
     ports:

@@ -1,6 +1,6 @@
 services:
   pocket-id:
-    image: ghcr.io/pocket-id/pocket-id:v1.7.0
+    image: ghcr.io/pocket-id/pocket-id:v1.15.0@sha256:92a5624ea14dc96e91ef236950d4d858e97119ce811075648ffd8343e364735d
     container_name: pocketid
     restart: unless-stopped
     ports:
@@ -29,7 +29,7 @@ services:
       glance.hide: "false"
 
   tinyauth:
-    image: ghcr.io/steveiliop56/tinyauth:v3.6.2
+    image: ghcr.io/steveiliop56/tinyauth:v4.0.1@sha256:815a53c517b4b8f29c02245fc89185186d12162f6bfc2e7566acf888c72ff14b
     container_name: tinyauth
     restart: unless-stopped
     environment:
