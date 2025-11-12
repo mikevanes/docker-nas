@@ -24,7 +24,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/user/appdata/plexmediaserver:/config
       - /mnt/user/appdata/plexmediaserver/transcode:/transcode
-      - /mnt/cache/dmb:/mnt/debrid:rslave
+      - /mnt/user/dmb:/mnt/debrid:rslave
     restart: unless-stopped
     depends_on:
       decypharr:
