@@ -1,6 +1,6 @@
 services:
   affine:
-    image: ghcr.io/toeverything/affine:0.25.3@sha256:1ca80161750a41364641073fd28e19fdb9b8101f735e1985378b15510423b841
+    image: ghcr.io/toeverything/affine:0.25.4@sha256:f6b5ec392082be4d820922f0e982dcea32829105103192d5a2f3d8bbc3dc82ba
     container_name: affine
     networks:
       - proxy_default
@@ -31,7 +31,7 @@ services:
       glance.hide: "false"
 
   affine_migration:
-    image: ghcr.io/toeverything/affine:0.25.3@sha256:1ca80161750a41364641073fd28e19fdb9b8101f735e1985378b15510423b841
+    image: ghcr.io/toeverything/affine:0.25.4@sha256:f6b5ec392082be4d820922f0e982dcea32829105103192d5a2f3d8bbc3dc82ba
     container_name: affine_migration_job
     volumes:
       - /mnt/user/appdata/affine/self-host/storage:/root/.affine/storage
