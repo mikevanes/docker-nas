@@ -56,7 +56,7 @@ services:
       MEILI_NO_ANALYTICS: "true"
       MEILI_MASTER_KEY: 4RLNGew2TvVhruTueZGd7MUfnyyvEb
     volumes:
-      - /mnt/user/appdata/melisearch/:/meili_data
+      - /mnt/user/appdata/melisearchv2/:/meili_data
     labels:
       glance.parent: karakeep
       glance.name: Meilisearch
