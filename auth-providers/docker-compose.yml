@@ -45,7 +45,7 @@ services:
       GENERIC_NAME: "Nora ID"
       OAUTH_AUTO_REDIRECT: "generic"
       DISABLE_CONTINUE: "true"
-      LOG_LEVEL: "0"
+      LOG_LEVEL: "info"
     networks:
       - proxy
     labels:
