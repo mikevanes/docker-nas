@@ -1,6 +1,7 @@
 working_dir: /
 auto_discover: true
-
+force_image_pull: true
+remove_orphans: true
 external_secrets:
   # General
   openai_api_key: 39931705-3080-49fc-bcb6-b3930073bb3b
@@ -32,6 +33,9 @@ external_secrets:
   vaultwarden_admin_token: a7cb53a1-7a05-4433-a0de-b39300821cd0
   
   vikunja_jwt_secret: ff8497e9-029d-4385-9c78-b3930083253f
+
+  newt_id_secret: 031ae55a-46f2-4477-aafc-b392014165ba
+  newt_secret_secret: 93ae014a-d464-4dd1-88fc-b3920141817a
   
 # ---
 # name: media
