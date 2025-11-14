@@ -2,16 +2,21 @@ working_dir: /
 auto_discover: true
 
 external_secrets:
+  # General
+  openai_api_key: 39931705-3080-49fc-bcb6-b3930073bb3b
+
+  # Services
   stirling_id: 47d179d9-9018-437a-bc68-b392007de391
   stirling_secret: ee4bf3d4-a418-43a8-a96f-b392007d4a39
+
   tinyauth_auth_secret: 4cfa6623-a514-4e7e-96fe-b39201438787
   tinyauth_oidc_id: 233069ae-f71c-434b-b85f-b3920143a2ca
   tinyauth_oidc_secret: bcd706f1-a581-48f8-b8d6-b3920143b7d0
+
   karakeep_auth_secret: cc41cd8a-72ea-4862-9c9b-b39300737163
   karakeep_oidc_id: fdd96390-59f9-4f06-9374-b3930073cfea
   karakeep_oidc_secret: 951233e3-d706-4c0f-9a07-b3930073fc59
-  openai_api_key: 39931705-3080-49fc-bcb6-b3930073bb3b
-
+  
   norish_oidc_id: 7e338863-19e6-4211-8cf1-b3930075c28f
   norish_oidc_secret: ca926dd0-fc9f-4e33-b9cf-b3930075d2bd
   norish_gh_id: 9f0dcbbc-8721-499a-bcf5-b3930075facf
@@ -21,9 +26,11 @@ external_secrets:
   norish_auth_secret: a5ed8e6f-3d8c-4c6f-9d76-b393007593ce
   norish_encryption_key: 1c88240e-202d-4cb2-942a-b3930075a800
   norish_hmac_key: f6dbe037-07b4-46db-a6e6-b3930075b46e
-  openai_api_key: 39931705-3080-49fc-bcb6-b3930073bb3b
+
   glance_github_token: 9c5b75f3-b6a3-41b8-9203-b39300817751
+
   vaultwarden_admin_token: a7cb53a1-7a05-4433-a0de-b39300821cd0
+  
   vikunja_jwt_secret: ff8497e9-029d-4385-9c78-b3930083253f
   
 # ---
