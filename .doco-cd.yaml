@@ -1,4 +1,4 @@
-working_dir: apps/
+working_dir: /
 auto_discover: true
 ---
 name: stirling-pdf
