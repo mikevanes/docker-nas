@@ -1,6 +1,6 @@
 services:
   vaultwarden:
-    image: vaultwarden/server:testing@sha256:2242416cc1436f3a3ca3a6c1104d0f384924e9690ec437f85284e3f165364e8c
+    image: vaultwarden/server:testing@sha256:498d8c77aab71b7242dd9dce6feadcf1e855ff943c43ac30ded8c154d3deab60
     container_name: vaultwarden
     security_opt:
       - no-new-privileges:true

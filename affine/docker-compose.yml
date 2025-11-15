@@ -1,6 +1,6 @@
 services:
   affine:
-    image: ghcr.io/toeverything/affine:0.25.4@sha256:f6b5ec392082be4d820922f0e982dcea32829105103192d5a2f3d8bbc3dc82ba
+    image: ghcr.io/toeverything/affine:0.25.5@sha256:4622f899d42069e112c5548092de9db924b220032e827fa2662fcb1d4379704b
     container_name: affine
     networks:
       - proxy_default
@@ -31,7 +31,7 @@ services:
       glance.hide: "false"
 
   affine_migration:
-    image: ghcr.io/toeverything/affine:0.25.4@sha256:f6b5ec392082be4d820922f0e982dcea32829105103192d5a2f3d8bbc3dc82ba
+    image: ghcr.io/toeverything/affine:0.25.5@sha256:4622f899d42069e112c5548092de9db924b220032e827fa2662fcb1d4379704b
     container_name: affine_migration_job
     volumes:
       - /mnt/user/appdata/affine/self-host/storage:/root/.affine/storage
@@ -62,7 +62,7 @@ services:
       glance.hide: "false"
 
   postgres:
-    image: pgvector/pgvector:pg16@sha256:c3c84b85691a264aa3c5b8fc1d611e67d42b0cca8596e3d3d22dc2424c12c4e2
+    image: pgvector/pgvector:pg16@sha256:0a07c4114ba6d1d04effcce3385e9f5ce305eb02e56a3d35948a415a52f193ec
     container_name: affine_postgres
     volumes:
       - /mnt/user/appdata/affine/self-host/postgres/pgdata:/var/lib/postgresql/data
