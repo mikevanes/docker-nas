@@ -1,6 +1,6 @@
 services:
   norish:
-    image: norishapp/norish:latest@sha256:fc7ea08879a196eb51c6d3ed41e91ec37fbd4e15744901bbabfa4523e2992d0a
+    image: norishapp/norish:latest@sha256:64bd0df6d864d590f3169e15a46662ddd2d661a712f1364f2b7f52dd70185423
     container_name: norish-app
     restart: unless-stopped
     networks:
@@ -59,9 +59,26 @@ services:
       # ------------------------------
       # AI Provider (optional)
       # ------------------------------
-      OPENAI_API_KEY: $openai_api_key
-      OPENAI_MODEL: gpt-5-mini
-      AI_ENABLED: "false"
+      AI_ENABLED: "true"
+      AI_PROVIDER: openai
+      AI_API_KEY: $openai_api_key
+      AI_MODEL: gpt-5-mini
+      AI_TEMPERATURE: "1.0"
+      AI_MAX_TOKENS: "10000"
+
+      # ------------------------------
+      # Video Recipe Parsing (optional)
+      # ------------------------------
+      VIDEO_PARSING_ENABLED: "true"
+      VIDEO_MAX_LENGTH_SECONDS: "120"  # 2 minutes max
+      VIDEO_TEMP_DIR: /app/uploads/video-temp
+
+      # ------------------------------
+      # Transcription (separate from AI_PROVIDER)
+      # ------------------------------
+      TRANSCRIPTION_PROVIDER: openai
+      TRANSCRIPTION_API_KEY: $openai_api_key  # Can use same key or separate
+      TRANSCRIPTION_MODEL: whisper-1
 
       # ------------------------------
       # Content Detection (optional)
