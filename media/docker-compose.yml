@@ -129,7 +129,7 @@ services:
       - PGID=100
       - TZ=Europe/Paris
     volumes:
-      - /mnt/user:/mnt/user:rshared     # <-- mount root of storage
+      - /mnt/user/dmb:/mnt/debrid:rshared     # <-- mount root of storage
       - /mnt/cache/rclonecache:/cache
       - /mnt/user/appdata/decypharr:/app
     devices:
