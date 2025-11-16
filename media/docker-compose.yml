@@ -89,35 +89,56 @@ services:
       glance.name: Tautulli
       glance.hide: "false"
 
+  # decypharr:
+  #   image: cy01/blackhole:v1.1.6@sha256:b9207450e8bd0dbc0f83e145aa5c487f5e5824e916d1f10349dd3386e8b769c7
+  #   container_name: decypharr
+  #   entrypoint: ["/bin/sh", "-c", "apk add --no-cache fuse3 fuse && exec /usr/bin/decypharr --config /app"]
+  #   user: "0:0"
+  #   networks:
+  #     - default
+  #   devices:
+  #     - /dev/fuse:/dev/fuse:rwm
+  #   cap_add:
+  #     - SYS_ADMIN
+  #   security_opt:
+  #     - apparmor:unconfined
+  #   environment:
+  #     - UMASK=002
+  #     - PUID=99
+  #     - PGID=100
+  #     - TZ=Europe/Amsterdam
+  #   ports:
+  #     - "8282:8282"
+  #   volumes:
+  #     - /mnt/cache/dmb:/mnt/debrid:rshared
+  #     - /mnt/cache/rclonecache:/cache
+  #     - /mnt/user/appdata/decypharr:/app
+  #   restart: unless-stopped
+  #   labels:
+  #     glance.parent: plex
+  #     glance.name: Blackhole
+  #     glance.hide: "false"
+
   decypharr:
-    image: cy01/blackhole:v1.1.6@sha256:b9207450e8bd0dbc0f83e145aa5c487f5e5824e916d1f10349dd3386e8b769c7
+    image: cy01/blackhole:latest
     container_name: decypharr
-    entrypoint: ["/bin/sh", "-c", "apk add --no-cache fuse3 fuse && exec /usr/bin/decypharr --config /app"]
-    user: "0:0"
-    networks:
-      - default
+    ports:
+      - "8282:8282"
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Europe/Paris
+    volumes:
+      - /mnt/user:/mnt/user:rshared     # <-- mount root of storage
+      - /mnt/cache/rclonecache:/cache
+      - /mnt/user/appdata/decypharr:/app
     devices:
       - /dev/fuse:/dev/fuse:rwm
     cap_add:
       - SYS_ADMIN
     security_opt:
       - apparmor:unconfined
-    environment:
-      - UMASK=002
-      - PUID=99
-      - PGID=100
-      - TZ=Europe/Amsterdam
-    ports:
-      - "8282:8282"
-    volumes:
-      - /mnt/cache/dmb:/mnt/debrid:rshared
-      - /mnt/cache/rclonecache:/cache
-      - /mnt/user/appdata/decypharr:/app
     restart: unless-stopped
-    labels:
-      glance.parent: plex
-      glance.name: Blackhole
-      glance.hide: "false"
 
   # rclone:
   #   image: rclone/rclone:1.71.2
