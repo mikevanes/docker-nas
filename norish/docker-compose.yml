@@ -1,6 +1,6 @@
 services:
   norish:
-    image: norishapp/norish:latest@sha256:18cfe05024b3a2aa84fea0535426259415e8f380597bc3b91ea64857e44decf3
+    image: norishapp/norish:latest@sha256:7bd3cf635499e196b1c922a55c6060e1dc16735e1a87ede309d1d2d382586c4a
     container_name: norish-app
     restart: unless-stopped
     networks:
@@ -17,6 +17,7 @@ services:
       AUTH_URL: https://norish.app
       RECIPES_DISK_DIR: /app/uploads
       IMPORT_API_TOKEN: 0ZVLb3Phism51RuWOAuuwsc5oxNZ11qx
+      CHROME_WS_ENDPOINT: ws://chrome-headless:3000
       
       # ------------------------------
       # Database
@@ -103,6 +104,20 @@ services:
       - /mnt/cache/appdata/norish/db:/var/lib/postgresql/data
     ports:
       - "5433:5432"
+
+  chrome-headless:
+    image: browserless/chrome:2.38.2
+    container_name: chrome-headless
+    restart: unless-stopped
+    networks:
+      - default
+    environment:
+      DEBUG: "browserless:*"
+      MAX_CONCURRENT_SESSIONS: 5
+      CONNECTION_TIMEOUT: 300000
+      KEEP_ALIVE: "true"
+    ports:
+      - "3003:3000"   # WS endpoint exposed at ws://localhost:3000
 
 networks:
   proxy_default:
