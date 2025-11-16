@@ -44,6 +44,7 @@ services:
       glance.id: plex
       glance.hide: "false"
 
+
   jellyseerr:
     image: fallenbagel/jellyseerr:preview-OIDC
     container_name: jellyseerr
@@ -66,6 +67,7 @@ services:
       glance.parent: plex
       glance.name: Jellyseerr
       glance.hide: "false"
+
 
   tautulli:
     image: ghcr.io/tautulli/tautulli:v2.16.0@sha256:7e6ede32f7923e01899db906aa6a96d978a4a8df8e2ef0dcf44c92b2d0206221
@@ -90,6 +92,8 @@ services:
       glance.name: Tautulli
       glance.hide: "false"
 
+
+  # ⬇ ORIGINAL INTERNAL MOUNTING VERSION (commented out as requested)
   # decypharr:
   #   image: cy01/blackhole:v1.1.6@sha256:b9207450e8bd0dbc0f83e145aa5c487f5e5824e916d1f10349dd3386e8b769c7
   #   container_name: decypharr
@@ -120,6 +124,8 @@ services:
   #     glance.name: Blackhole
   #     glance.hide: "false"
 
+
+  # ⬇ Your **current, correct** decypharr with internal rclone mount
   decypharr:
     image: cy01/blackhole:latest
     container_name: decypharr
@@ -138,8 +144,8 @@ services:
     ports:
       - "8282:8282"
     volumes:
-      - /mnt/decypharr:/mnt/decypharr:rshared          # NEW → internal rclone mount target
-      - /mnt/user/dmb:/mnt/debrid:rshared              # Keeps old path structure for ARR/Plex
+      - /mnt/decypharr:/mnt/decypharr:rshared     # NEW internal mount root
+      - /mnt/user/dmb:/mnt/debrid:rshared         # Legacy ARR/Plex path preserved
       - /mnt/cache/rclonecache:/cache
       - /mnt/user/appdata/decypharr:/app
     restart: unless-stopped
@@ -148,7 +154,8 @@ services:
       glance.name: Blackhole
       glance.hide: "false"
 
-      
+
+  # ⬇ ORIGINAL EXTERNAL RCLONE CONTAINER (commented out as requested)
   # rclone:
   #   image: rclone/rclone:1.71.2
   #   container_name: rclone
@@ -192,6 +199,7 @@ services:
   #     glance.name: Rclone
   #     glance.hide: "false"
 
+
   prowlarr:
     image: ghcr.io/hotio/prowlarr:release-2.1.5.5216@sha256:c9461e88006cb720c4061bd8982c436d1e8b981dd1ccbec90f6f866aa7f187c1
     container_name: prowlarr
@@ -211,6 +219,7 @@ services:
       glance.name: Prowlarr
       glance.hide: "false"
 
+
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:v3.4.5@sha256:4f4e5f759aa3a9a64305e99188ea1db1ec2944a5e7d290d2b089af5f2f6f48e4
     container_name: flaresolverr
@@ -228,6 +237,7 @@ services:
       glance.parent: plex
       glance.name: Flaresolverr
       glance.hide: "false"
+
 
   radarr:
     image: ghcr.io/hotio/radarr:release-5.28.0.10274@sha256:42ca21d9bab4df84af1898e7256256b85a04b207e72c620ac382ac4151d65dd0
@@ -252,6 +262,7 @@ services:
       glance.name: Radarr
       glance.hide: "false"
 
+
   radarr-anime:
     image: ghcr.io/hotio/radarr:release-5.28.0.10274@sha256:42ca21d9bab4df84af1898e7256256b85a04b207e72c620ac382ac4151d65dd0
     container_name: radaranime
@@ -274,6 +285,7 @@ services:
       glance.parent: plex
       glance.name: Radarr-anime
       glance.hide: "false"
+
 
   sonarr:
     image: ghcr.io/hotio/sonarr:release-4.0.16.2944
@@ -298,6 +310,7 @@ services:
       glance.name: Sonarr
       glance.hide: "false"
 
+
   sonarranime:
     image: ghcr.io/hotio/sonarr:release-4.0.16.2944@sha256:20cf6013b2b35c035f9ce7d5e8149eccf03c933c58ea40a9bd397e57a6dee714
     container_name: sonarranime
@@ -320,6 +333,7 @@ services:
       glance.parent: plex
       glance.name: Sonarr-anime
       glance.hide: "false"
+
 
 networks:
   proxy_default:
