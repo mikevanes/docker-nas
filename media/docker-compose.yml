@@ -144,8 +144,7 @@ services:
     ports:
       - "8282:8282"
     volumes:
-      - /mnt/decypharr:/mnt/decypharr:rshared     # NEW internal mount root
-      - /mnt/user/dmb:/mnt/debrid:rshared         # Legacy ARR/Plex path preserved
+      - /mnt/user/dmb:/mnt/debrid:rshared 
       - /mnt/cache/rclonecache:/cache
       - /mnt/user/appdata/decypharr:/app
     restart: unless-stopped
