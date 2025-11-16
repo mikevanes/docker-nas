@@ -144,6 +144,7 @@ services:
     ports:
       - "8282:8282"
     volumes:
+      - /mnt/decypharr:/mnt/decypharr:rshared
       - /mnt/user/dmb:/mnt/debrid:rshared 
       - /mnt/cache/rclonecache:/cache
       - /mnt/user/appdata/decypharr:/app
