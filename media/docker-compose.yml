@@ -125,7 +125,6 @@ services:
   #     glance.hide: "false"
 
 
-  # ⬇ Your **current, correct** decypharr with internal rclone mount
   decypharr:
     image: cy01/blackhole:latest
     container_name: decypharr
@@ -144,8 +143,7 @@ services:
     ports:
       - "8282:8282"
     volumes:
-      - /mnt/decypharr:/mnt/decypharr:rshared
-      - /mnt/user/dmb:/mnt/debrid:rshared 
+      - /mnt/user/dmb:/mnt/debrid:rshared
       - /mnt/cache/rclonecache:/cache
       - /mnt/user/appdata/decypharr:/app
     restart: unless-stopped
