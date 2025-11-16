@@ -1,4 +1,5 @@
 services:
+
   plex:
     image: plexinc/pms-docker:1.42.1.10060-4e8b05daf@sha256:4e704a2172129d8a6bc5b05ea201945b329bb6512f48a4e92ed4a4a787c35462
     container_name: plex
@@ -24,7 +25,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/user/appdata/plexmediaserver:/config
       - /mnt/user/appdata/plexmediaserver/transcode:/transcode
-      - /mnt:/mnt:rslave               # ✅ Internal rclone mount visible
+      - /mnt/user/dmb:/mnt/debrid:rslave
     restart: unless-stopped
     depends_on:
       decypharr:
@@ -44,7 +45,7 @@ services:
       glance.hide: "false"
 
   jellyseerr:
-    image: fallenbagel/jellyseerr:preview-OIDC@sha256:9f3195998306da6548fc3b2420d114dda64a6e904f41e911168788fb410a7972
+    image: fallenbagel/jellyseerr:preview-OIDC
     container_name: jellyseerr
     environment:
       - LOG_LEVEL=ERROR
@@ -56,7 +57,6 @@ services:
       - default
     volumes:
       - /mnt/user/appdata/jellyseerr/config:/app/config
-      - /mnt:/mnt:rslave               # ✅ Allow browsing of mounted files
     restart: unless-stopped
     depends_on:
       plex:
@@ -81,7 +81,6 @@ services:
       - "8181:8181"
     volumes:
       - /mnt/user/appdata/tautulli:/config
-      - /mnt:/mnt:rslave
     depends_on:
       plex:
         condition: service_healthy
@@ -124,24 +123,32 @@ services:
   decypharr:
     image: cy01/blackhole:latest
     container_name: decypharr
-    ports:
-      - "8282:8282"
-    environment:
-      - PUID=99
-      - PGID=100
-      - TZ=Europe/Paris
-    volumes:
-      - /mnt:/mnt:rshared       # ✅ REQUIRED for internal rclone propagation
-      - /mnt/cache/rclonecache:/cache
-      - /mnt/user/appdata/decypharr:/app
+    networks:
+      - default
     devices:
       - /dev/fuse:/dev/fuse:rwm
     cap_add:
       - SYS_ADMIN
     security_opt:
       - apparmor:unconfined
+    environment:
+      - PUID=99
+      - PGID=100
+      - TZ=Europe/Amsterdam
+    ports:
+      - "8282:8282"
+    volumes:
+      - /mnt/decypharr:/mnt/decypharr:rshared          # NEW → internal rclone mount target
+      - /mnt/user/dmb:/mnt/debrid:rshared              # Keeps old path structure for ARR/Plex
+      - /mnt/cache/rclonecache:/cache
+      - /mnt/user/appdata/decypharr:/app
     restart: unless-stopped
+    labels:
+      glance.parent: plex
+      glance.name: Blackhole
+      glance.hide: "false"
 
+      
   # rclone:
   #   image: rclone/rclone:1.71.2
   #   container_name: rclone
@@ -199,7 +206,6 @@ services:
     volumes:
       - /mnt/user/appdata/prowlarr/Definitions/Custom:/Custom
       - /mnt/user/appdata/prowlarr:/config
-      - /mnt:/mnt:rslave
     labels:
       glance.parent: plex
       glance.name: Prowlarr
@@ -235,8 +241,8 @@ services:
       - "7878:7878"
     restart: unless-stopped
     volumes:
+      - /mnt/user/dmb:/mnt/debrid:rslave
       - /mnt/user/appdata/radarr:/config
-      - /mnt:/mnt:rslave
     depends_on:
       decypharr:
         condition: service_healthy
@@ -258,8 +264,8 @@ services:
       - "7979:7878"
     restart: unless-stopped
     volumes:
+      - /mnt/user/dmb:/mnt/debrid:rslave
       - /mnt/user/appdata/radarranime:/config
-      - /mnt:/mnt:rslave
     depends_on:
       decypharr:
         condition: service_healthy
@@ -270,7 +276,7 @@ services:
       glance.hide: "false"
 
   sonarr:
-    image: ghcr.io/hotio/sonarr:release-4.0.16.2944@sha256:20cf6013b2b35c035f9ce7d5e8149eccf03c933c58ea40a9bd397e57a6dee714
+    image: ghcr.io/hotio/sonarr:release-4.0.16.2944
     container_name: sonarr
     networks:
       - default
@@ -281,8 +287,8 @@ services:
       - "8989:8989"
     restart: unless-stopped
     volumes:
+      - /mnt/user/dmb:/mnt/debrid:rslave
       - /mnt/user/appdata/sonarr:/config
-      - /mnt:/mnt:rslave
     depends_on:
       decypharr:
         condition: service_healthy
@@ -304,8 +310,8 @@ services:
       - "9090:8989"
     restart: unless-stopped
     volumes:
+      - /mnt/user/dmb:/mnt/debrid:rslave
       - /mnt/user/appdata/sonarranime:/config
-      - /mnt:/mnt:rslave
     depends_on:
       decypharr:
         condition: service_healthy
