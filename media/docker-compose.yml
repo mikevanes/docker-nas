@@ -24,7 +24,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /mnt/user/appdata/plexmediaserver:/config
       - /mnt/user/appdata/plexmediaserver/transcode:/transcode
-      - /mnt/user/dmb:/mnt/debrid:rslave
+      - /mnt:/mnt:ro               # ✅ Internal rclone mount visible
     restart: unless-stopped
     depends_on:
       decypharr:
@@ -56,6 +56,7 @@ services:
       - default
     volumes:
       - /mnt/user/appdata/jellyseerr/config:/app/config
+      - /mnt:/mnt:ro               # ✅ Allow browsing of mounted files
     restart: unless-stopped
     depends_on:
       plex:
@@ -80,6 +81,7 @@ services:
       - "8181:8181"
     volumes:
       - /mnt/user/appdata/tautulli:/config
+      - /mnt:/mnt:ro
     depends_on:
       plex:
         condition: service_healthy
@@ -129,7 +131,7 @@ services:
       - PGID=100
       - TZ=Europe/Paris
     volumes:
-      - /mnt/user/dmb:/mnt/debrid:rshared     # <-- mount root of storage
+      - /mnt:/mnt:rshared       # ✅ REQUIRED for internal rclone propagation
       - /mnt/cache/rclonecache:/cache
       - /mnt/user/appdata/decypharr:/app
     devices:
@@ -197,6 +199,7 @@ services:
     volumes:
       - /mnt/user/appdata/prowlarr/Definitions/Custom:/Custom
       - /mnt/user/appdata/prowlarr:/config
+      - /mnt:/mnt:ro
     labels:
       glance.parent: plex
       glance.name: Prowlarr
@@ -232,8 +235,8 @@ services:
       - "7878:7878"
     restart: unless-stopped
     volumes:
-      - /mnt/user/dmb:/mnt/debrid:rslave
       - /mnt/user/appdata/radarr:/config
+      - /mnt:/mnt:ro
     depends_on:
       decypharr:
         condition: service_healthy
@@ -255,8 +258,8 @@ services:
       - "7979:7878"
     restart: unless-stopped
     volumes:
-      - /mnt/user/dmb:/mnt/debrid:rslave
       - /mnt/user/appdata/radarranime:/config
+      - /mnt:/mnt:ro
     depends_on:
       decypharr:
         condition: service_healthy
@@ -278,8 +281,8 @@ services:
       - "8989:8989"
     restart: unless-stopped
     volumes:
-      - /mnt/user/dmb:/mnt/debrid:rslave
       - /mnt/user/appdata/sonarr:/config
+      - /mnt:/mnt:ro
     depends_on:
       decypharr:
         condition: service_healthy
@@ -301,8 +304,8 @@ services:
       - "9090:8989"
     restart: unless-stopped
     volumes:
-      - /mnt/user/dmb:/mnt/debrid:rslave
       - /mnt/user/appdata/sonarranime:/config
+      - /mnt:/mnt:ro
     depends_on:
       decypharr:
         condition: service_healthy
