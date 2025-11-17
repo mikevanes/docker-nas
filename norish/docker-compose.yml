@@ -1,6 +1,6 @@
 services:
   norish:
-    image: norishapp/norish:latest@sha256:30c9c6027478852813d3b4bc3b63b7079dc71feb2831f8e9fe520d3bd5350d72
+    image: norishapp/norish:latest@sha256:c7918e17593ae3c3761870dd4099c53761f0c18d8082164f0b5d8e5d236c4d8b
     container_name: norish-app
     restart: unless-stopped
     networks:
