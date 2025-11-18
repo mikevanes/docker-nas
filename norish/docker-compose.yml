@@ -1,6 +1,6 @@
 services:
   norish:
-    image: norishapp/norish:latest@sha256:fc51d95bd63ca2b5efccc57eda506b45f22cbea9132166ef2efb3bda646b9acb
+    image: norishapp/norish:latest@sha256:833388fa5d41354ddc7013507ffe188965379fd65905687d2a11fd4ad0c9e343
     container_name: norish-app
     restart: unless-stopped
     networks:
@@ -106,7 +106,7 @@ services:
       - "5433:5432"
 
   chrome-headless:
-    image: browserless/chrome:2.38.2
+    image: ghcr.io/browserless/chrome:v2.38.2@sha256:3cb9989a655c6e69586207de0d77b9530345d21fdf987e5d0ada3a49757c538d
     container_name: chrome-headless
     restart: unless-stopped
     networks:
