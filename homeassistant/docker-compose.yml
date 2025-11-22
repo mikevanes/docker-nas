@@ -5,7 +5,7 @@ services:
       - br0
       - proxy_default
       - default
-    image: ghcr.io/home-assistant/home-assistant:2025.11@sha256:c11dd7c74039223c43079d700aa559d6dc61e8e0b38a08d651f91d1bc550cff5
+    image: ghcr.io/home-assistant/home-assistant:2025.11@sha256:f971850a6ec1fb5c5fd4e1748058e9e1f589aaf0da933b8d88bb5dee03f5b5e8
     volumes:
       - /mnt/user/appdata/homeassistant:/config
       - /mnt/user/immich-photos/:/config/www/immich
@@ -40,7 +40,7 @@ services:
       glance.hide: "false"
 
   mqtt:
-    image: eclipse-mosquitto:2.0.22@sha256:fd9982f5ed92a6c2a90805601d2275f8fbd7f2d47c4cb3836f7db0bdc7a91bec
+    image: eclipse-mosquitto:2.0.22@sha256:077fe4ff4c49df1e860c98335c77dda08360629e0e2a718147027e4db3eace9d
     container_name: mqtt
     ports:
       - "1883:1883"
