@@ -1,6 +1,6 @@
 services:
   norish:
-    image: norishapp/norish:latest@sha256:0a9b441456dac4b1be734f791e9e25af844fcb622bf03a136d587ac3e7dc58c3
+    image: norishapp/norish:latest@sha256:1ade97b82545e9f3b2c11948ff69e1552231aca116685e87734ef384e7c28626
     container_name: norish-app
     restart: unless-stopped
     networks:
@@ -16,7 +16,6 @@ services:
       # ------------------------------
       AUTH_URL: https://norish.app
       RECIPES_DISK_DIR: /app/uploads
-      IMPORT_API_TOKEN: 0ZVLb3Phism51RuWOAuuwsc5oxNZ11qx
       CHROME_WS_ENDPOINT: ws://chrome-headless:3000
       
       # ------------------------------
