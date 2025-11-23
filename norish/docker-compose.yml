@@ -1,6 +1,6 @@
 services:
   norish:
-    image: norishapp/norish:latest@sha256:24cc27b5fdbb9faaa4a4941959db144b744b81f9cd798708d2e97b30277de98b
+    image: norishapp/norish:latest@sha256:0a9b441456dac4b1be734f791e9e25af844fcb622bf03a136d587ac3e7dc58c3
     container_name: norish-app
     restart: unless-stopped
     networks:
@@ -53,9 +53,7 @@ services:
       # ------------------------------
       # Encryption & Security
       # ------------------------------
-      AUTH_SECRET: $norish_auth_secret
-      ENCRYPTION_KEY: $norish_encryption_key
-      HMAC_KEY: $norish_hmac_key
+      MASTER_KEY: $norish_auth_secret
 
       # ------------------------------
       # AI Provider (optional)
