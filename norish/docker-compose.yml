@@ -15,7 +15,7 @@ services:
       # Core
       # ------------------------------
       AUTH_URL: https://norish.app
-      RECIPES_DISK_DIR: /app/uploads
+      RECIPES_DISK_DIR: /app/uploads/
       CHROME_WS_ENDPOINT: ws://chrome-headless:3000
       
       # ------------------------------
