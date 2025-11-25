@@ -1,6 +1,6 @@
 services:
   norish:
-    image: norishapp/norish:latest@sha256:37efc2ca9091070ae879fd62783e00b03c0bc7afe1d9e933fd08ca1eca891b0e
+    image: norishapp/norish:latest@sha256:6bb26f8adcde30aa682785d83649ef1bf46acb77ddf90e0696b69cde223a319c
     container_name: norish-app
     restart: unless-stopped
     networks:
@@ -17,17 +17,12 @@ services:
       AUTH_URL: https://norish.app
       RECIPES_DISK_DIR: /app/uploads/
       CHROME_WS_ENDPOINT: ws://chrome-headless:3000
+      MASTER_KEY: $norish_auth_secret
       
       # ------------------------------
       # Database
       # ------------------------------
       DATABASE_URL: postgres://postgres:norish@db:5432/norish
-
-      # ------------------------------
-      # Authentication Providers
-      # ------------------------------
-      NEXT_PUBLIC_AUTH_PROVIDERS: oidc,github,google
-      ENABLE_REGISTRATION: "true"
 
       # ------------------------------
       # OIDC - optional - One of three providers is required
@@ -36,52 +31,6 @@ services:
       OIDC_ISSUER: https://auth.vanes.dev
       OIDC_CLIENT_ID: $norish_oidc_id
       OIDC_CLIENT_SECRET: $norish_oidc_secret
-
-      # ------------------------------
-      # OIDC - GitHub - optional
-      # ------------------------------
-      GITHUB_CLIENT_ID: $norish_gh_id
-      GITHUB_CLIENT_SECRET: $norish_gh_secret
-
-      # ------------------------------
-      # OIDC - Google - optional
-      # ------------------------------
-      GOOGLE_CLIENT_ID: $norish_google_id
-      GOOGLE_CLIENT_SECRET: $norish_google_secret
-
-      # ------------------------------
-      # Encryption & Security
-      # ------------------------------
-      MASTER_KEY: $norish_auth_secret
-
-      # ------------------------------
-      # AI Provider (optional)
-      # ------------------------------
-      AI_ENABLED: "true"
-      AI_PROVIDER: openai
-      AI_API_KEY: $openai_api_key
-      AI_MODEL: gpt-5-mini
-      AI_TEMPERATURE: "1.0"
-      AI_MAX_TOKENS: "10000"
-
-      # ------------------------------
-      # Video Recipe Parsing (optional)
-      # ------------------------------
-      VIDEO_PARSING_ENABLED: "true"
-      VIDEO_MAX_LENGTH_SECONDS: "120"  # 2 minutes max
-      VIDEO_TEMP_DIR: /app/uploads/video-temp
-
-      # ------------------------------
-      # Transcription (separate from AI_PROVIDER)
-      # ------------------------------
-      TRANSCRIPTION_PROVIDER: openai
-      TRANSCRIPTION_API_KEY: $openai_api_key  # Can use same key or separate
-      TRANSCRIPTION_MODEL: whisper-1
-
-      # ------------------------------
-      # Content Detection (optional)
-      # ------------------------------
-      CONTENT_INGREDIENTS: "ingredients,instructions,servings"
 
     depends_on:
       - db
