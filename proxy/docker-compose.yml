@@ -16,7 +16,7 @@ services:
       glance.hide: "false"
 
   npm:
-    image: jc21/nginx-proxy-manager:2.13.2@sha256:342e8cfaa072e5dcdf26030279cbcd7e993b7926cb49018f4872e8cc72e87288
+    image: jc21/nginx-proxy-manager:2.13.5@sha256:cd9eba29ca132cb006729f2cb2660126453f84818c2f7d75963ad7b61ef696bd
     container_name: npm
     restart: unless-stopped
     ports:
